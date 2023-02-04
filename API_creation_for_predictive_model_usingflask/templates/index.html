@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Species Prediction</title>
+</head>
+<body>
+    <h1>Species Prediction</h1>
+    <form method = "POST">
+        Sepal Length: <input type="text" name="sepal_length"><br>
+        Sepal Width: <input type="text" name="sepal_width"><br>
+        Petal Length: <input type="text" name="petal_length"><br>
+        Petal Width: <input type="text" name="petal_width"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <h2>Predicted Species</h2>
+    <p>
+        according to the given values it's most likely : {{ output }}
+    </p>
+</body>
+</html>
