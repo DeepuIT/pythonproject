@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Real estate price Prediction</title>
+    <title>Nectar Prediction</title>
 </head>
 <body>
-    <h1>Price Prediction</h1>
+    <h1>Nectar Prediction</h1>
     <form method = "POST">
-        transaction_date: <input type="text" name="transaction_date"><br>
-        house_age: <input type="text" name="house_age"><br>
-        distance_to_nearest_station: <input type="text" name="distance_to_nearest_station"><br>
-        number_of_convenience_stores: <input type="text" name="number_of_convenience_stores"><br>
-        latitude: <input type="text" name="latitude"><br>
-        longitude: <input type="text" name="longitude"><br>     
+        habitat: <input type="text" name="habitat"><br>
+        bagging_hour: <input type="text" name="bagging_hour"><br>
+        collection_hour: <input type="text" name="collection_hour"><br>
+        temp: <input type="text" name="temp"><br>
+        hum: <input type="text" name="hum"><br>
+        sugarin24: <input type="text" name="sugarin24"><br>
+        bagging_unbagged: <input type="text" name="bagging_unbagged"><br>
+        rinsing_Y: <input type="text" name="rinsing_Y"><br>
+        flower_age_o: <input type="text" name="flower_age_o"><br>
+        flower_age_y: <input type="text" name="flower_age_y"><br>
+        flower_sex_h: <input type="text" name="flower_sex_h"><br>
+        flower_sex_m: <input type="text" name="flower_sex_m"><br>          
         <input type="submit" value="Submit">
     </form>
-    <h2>Predicted Price</h2>
+    <h2>Predicted nectar max</h2>
     <p>
         according to the given values it's most likely : {{ output }}
     </p>

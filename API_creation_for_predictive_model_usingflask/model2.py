@@ -6,28 +6,36 @@
 
 #importing the necessary libraries
 import pandas as pd
-import numpy as np
-import pickle
-from sklearn.linear_model import LinearRegression,RidgeCV,Lasso
-from sklearn.ensemble import RandomForestRegressor,AdaBoostRegressor
-
-#loading the dataset
-df = pd.read_csv('Real_estate.csv')
-df.drop('No',axis = 1,inplace = True)
-df.transaction_date =[int(i) for i in df.transaction_date ]
-
-#separating the independent and dependent variables
-x2 = df.drop('house_price_of_unit_area',axis =1)
-y2 = df.house_price_of_unit_area
-
-#splitting into test and train sets
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-x_train2, x_test2, y_train2, y_test2 = train_test_split(x2,y2,test_size=0.2,random_state=0)
+import pickle
+df = pd.read_csv('AgriLand_Nectar_perflower.csv',encoding= 'unicode_escape',infer_datetime_format=True)
 
-#fitting the linear regression model
+#feature engineering
+df.columns = ['species', 'location', 'habitat', 'id', 'bagging', 'rinsing','bagging_date', 'bagging_hour', 'collection_date', 'collection_hour','year', 'temp', 'hum', 'plant_no', 'flower_no', 'flower_age','flower_sex', 'sugarin24', 'sugarmaxin24']
+df.drop(['species','location','id','year','plant_no','flower_no','collection_date','bagging_date'],axis = 1,inplace = True)
+df['sugarin24'].fillna(df['sugarin24'].mean(),inplace = True)
+df['sugarmaxin24'].fillna(df['sugarmaxin24'].mean(),inplace = True)
+df['bagging_hour'] = [float(str(i).split(':')[0]) for i in df['bagging_hour']]
+df['collection_hour'] = [float(str(i).split(':')[0]) for i in df['collection_hour']]
+df['habitat'] = [1 if any([x in i for x in ['wet','grass','pond']]) else 0 for i in df['habitat']]
+df['collection_hour'].fillna(df['collection_hour'].mean(),inplace = True)
+df['temp'].fillna(df['temp'].mean(),inplace = True)
+df['hum'].fillna(df['hum'].mean(),inplace = True)
+df['bagging_hour'].fillna(df['bagging_hour'].mean(),inplace = True)
+df.dropna(inplace = True)
+features = pd.get_dummies(df.drop('sugarmaxin24', axis = 1),drop_first = True)
+target = df['sugarmaxin24']
 
-regressor = Lasso()
-regressor.fit(x_train2,y_train2)
+#splitting the dataset into train and test set
+X_train, X_test, y_train, y_test = train_test_split(features, target, test_size = 0.2, random_state = 0)
+
+#creating a linear regression model
+regressor = LinearRegression()
+
+#fitting the model on the training set
+regressor.fit(X_train, y_train)
 
 #saving the model
 pickle_out = open("model2.pkl","wb")
